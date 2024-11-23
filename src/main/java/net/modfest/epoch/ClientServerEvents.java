@@ -1,10 +1,6 @@
 package net.modfest.epoch;
 
-import com.mojang.brigadier.StringReader;
-import net.minecraft.server.commands.SpreadPlayersCommand;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.portal.DimensionTransition;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -17,7 +13,6 @@ public class ClientServerEvents {
     private static boolean isClientServer() {
         return Config.isClientServer;
     }
-
     private static final Queue<ServerPlayer> playersToSpawn = new LinkedList<>();
 
     @SubscribeEvent
