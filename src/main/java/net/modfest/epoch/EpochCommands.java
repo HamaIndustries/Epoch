@@ -3,10 +3,10 @@ package net.modfest.epoch;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.mynamesraph.mystcraft.item.DescriptiveBookItem;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -17,6 +17,7 @@ public class EpochCommands {
     @SubscribeEvent
     public static void registerEvent(RegisterCommandsEvent event) {
         register(event.getDispatcher());
+
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -28,9 +29,11 @@ public class EpochCommands {
     }
 
     public static int resetWorldCommand(CommandContext<CommandSourceStack> source) {
-        source.getSource().sendSuccess(() -> Component.literal("resetting epoch"), true);
-
-
+        if (!Config.isClientServer) {
+            source.getSource().sendFailure(Component.literal("cannot run this command outside aux server"));
+        }
+        ServerLevel result = DimensionControl.createRandomDimension(source.getSource().getServer());
+        source.getSource().sendSuccess(() -> Component.literal("created dim " + result.getDescriptionKey()), true);
         return 1;
     }
 }

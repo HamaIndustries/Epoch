@@ -3,7 +3,8 @@
   "package": "net.modfest.epoch.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "PlayerDataStorageMixin"
+    "PlayerDataStorageMixin",
+    "DescriptiveBookItemAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

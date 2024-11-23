@@ -10,7 +10,7 @@ import java.util.*;
 
 @EventBusSubscriber(modid = Epoch.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class ClientServerEvents {
-    private static boolean isClientServer() {
+    static boolean isClientServer() {
         return Config.isClientServer;
     }
     private static final Queue<ServerPlayer> playersToSpawn = new LinkedList<>();
