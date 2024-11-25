@@ -17,6 +17,8 @@ public class PlayerDataStorageMixin {
             at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/storage/PlayerDataStorage;playerDir:Ljava/io/File;")
     )
     private File wrapPlayerLoad(File original, Player player, String suffix) throws IOException {
-        return Config.isClientServer ? new File(Config.playerSourcePath) : original;
+//        return Config.isClientServer ? new File(Config.playerSourcePath) : original;
+        // temp: transfer player data from showcase via packet validation
+        return original;
     }
 }

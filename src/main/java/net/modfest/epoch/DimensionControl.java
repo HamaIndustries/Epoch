@@ -10,9 +10,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.dimension.LevelStem;
 import net.modfest.epoch.mixin.DescriptiveBookItemAccessor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class DimensionControl {
 
     private static int dimCounter = 0;
+    private static ResourceKey<Level> currentDim = null;
 
     public static ServerLevel createRandomDimension(MinecraftServer server) {
 
@@ -43,11 +45,17 @@ public class DimensionControl {
                 ResourceLocation.fromNamespaceAndPath(Epoch.MODID, "test_dim_"  + dimCounter++)
         );
 
+        currentDim = levelKey;
         return InfiniverseAPI.get().getOrCreateLevel(
                 server,
                 levelKey,
                 () -> ((DescriptiveBookItemAccessor)MystcraftItems.INSTANCE.getDESCRIPTIVE_BOOK().asItem())
                         .invokeCreateNoiseLevel(server, book)
         );
+    }
+
+    @Nullable
+    public static ResourceKey<Level> currentDim() {
+        return currentDim;
     }
 }

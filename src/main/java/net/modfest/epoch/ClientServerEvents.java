@@ -1,6 +1,8 @@
 package net.modfest.epoch;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -20,6 +22,11 @@ public class ClientServerEvents {
         if (!isClientServer()) return;
         var player = (ServerPlayer)event.getEntity();
         player.setGameMode(player.getServer().getDefaultGameType());
+
+        ResourceKey<Level> currentDim = DimensionControl.currentDim();
+        if (currentDim != null) {
+            player.setRespawnPosition(currentDim, null, 0, true, false);
+        }
         playersToSpawn.add(player);
     }
 
